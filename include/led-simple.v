@@ -15,7 +15,8 @@ module led_main #(
         input resetn_btn,
         output pll_clk,
         output reset,
-        output [15:0] LED_PANEL);
+        output [15:0] LED_PANEL,
+        input [2:0] BUTTONS);
 
     wire pll_clk;
     wire pll_locked;
@@ -24,7 +25,8 @@ module led_main #(
     led_driver driver(
         .clk(pll_clk),
         .reset(reset),
-        .LED_PANEL(LED_PANEL));
+        .LED_PANEL(LED_PANEL),
+        .BUTTONS(BUTTONS));
 
     pll_30mhz pll(
         .clk_pin(CLK),
@@ -54,7 +56,8 @@ endmodule // led_main
 module led_driver (
         input         clk,
         input         reset,
-        output [15:0] LED_PANEL);
+        output [15:0] LED_PANEL,
+        input [2:0] BUTTONS);
 
     // State machine.
     localparam
@@ -247,7 +250,8 @@ module led_driver (
         .subframe(subframe),
         .x(x[5:0]),
         .y(y0),
-        .rgb(rgb0));
+        .rgb(rgb0),
+        .buttons(BUTTONS));
 
     painter paint1(
         .clk(clk),
@@ -256,7 +260,8 @@ module led_driver (
         .subframe(subframe),
         .x(x[5:0]),
         .y(y1),
-        .rgb(rgb1));
+        .rgb(rgb1),
+        .buttons(BUTTONS));
 
     ddr led_blank_ddr(
         .clk(clk),

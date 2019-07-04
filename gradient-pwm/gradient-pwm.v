@@ -49,6 +49,6 @@ module painter24(
             blue  <= (row[2] ? y_lo : 0) + (col[2] ? x_lo : 0);
         end
 
-    assign rgb24 = {blue, green, red};
+    assign rgb24 = {8'd12, 8'd12, 8'd12};
 
 endmodule

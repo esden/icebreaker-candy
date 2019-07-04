@@ -5,12 +5,16 @@
 module top (
         input         CLK,
         input         BTN_N,
-        output [15:0] LED_PANEL);
+        output [15:0] LED_PANEL,
+        input         BTN1,
+        input         BTN2,
+        input         BTN3);
 
     led_main main (
         .CLK(CLK),
         .resetn_btn(BTN_N),
-        .LED_PANEL(LED_PANEL));
+        .LED_PANEL(LED_PANEL),
+        .BUTTONS({BTN3, BTN2, BTN1}));
 
 endmodule
 
@@ -21,9 +25,10 @@ module painter(
         input  [7:0] subframe,
         input  [5:0] x,
         input  [5:0] y,
-        output [2:0] rgb);
+        output [2:0] rgb,
+        input  [2:0] buttons);
 
-    wire [12:0] xx = {~3'd0, x} - frame[10:2];
+    wire [12:0] xx = {~3'd0, x} - frame[8:0];
     wire red = 320 <= xx && xx < 448;
     wire grn = 160 <= xx && xx < 288;
     wire blu =   0 <= xx && xx < 128;
